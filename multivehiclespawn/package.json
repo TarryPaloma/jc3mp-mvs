@@ -1,0 +1,9 @@
+{
+    "authors": "Tarry",
+    "license": "MIT",
+	"caveats": "Don't read the code, it's skanky af. Srsly. Dat code so dutty it make yo mama look like a choir girl",
+	"main": "main.js",
+    "name": "multivehiclespawn",
+	"jcmp_dependencies": ["command-manager","chat"],
+    "version": "1.0"
+}

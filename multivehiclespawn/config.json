@@ -1,0 +1,6 @@
+{
+	"maxnumberofvehicles": 4,
+	"autoenter": false,
+	"canspawninvehicle": false,
+	"mintimebetweenspawns": 5000
+}
