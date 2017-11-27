@@ -18,23 +18,23 @@ freeroam.commands.loadFromDirectory(`${__dirname}/commands`, (f, ...a) => requir
 console.log(`${__dirname}`);
 
 jcmp.events.Add("PlayerCreated", player => {
-    player.freeroam.ownedvehicles = [];
-	player.freeroam.currvehicle = 0;
-	player.freeroam.canspawnvehicles = true;
+    player.ownedvehicles = [];
+	player.currvehicle = 0;
+	player.canspawnvehicles = true;
 });
 
 jcmp.events.Add("PlayerDestroyed", player => {
 	//destroy all vehicles this player spawned
-		for(var i=0;i<player.freeroam.ownedvehicles.length;i++){
-			if (typeof player.freeroam.ownedvehicles[i] !== 'undefined'){
-				player.freeroam.ownedvehicles[i].Destroy();
+		for(var i=0;i<player.ownedvehicles.length;i++){
+			if (typeof player.ownedvehicles[i] !== 'undefined'){
+				player.ownedvehicles[i].Destroy();
 			}
 		}
 });
 
 jcmp.events.Add("spawnmenu/local/spawnVehicle", player => {
-	if (typeof player.freeroam.ownedvehicles[player.freeroam.currvehicle] !== 'undefined'){
-	player.freeroam.ownedvehicles[player.freeroam.currvehicle].Destroy();
+	if (typeof player.ownedvehicles[player.currvehicle] !== 'undefined'){
+	player.ownedvehicles[player.currvehicle].Destroy();
 	}
 	
 });
@@ -45,7 +45,7 @@ jcmp.events.Add("spawnmenu/local/vehicleSpawned", (player, vehicle) => {
 	setTimeout(function() {delete player.spawnedVehicle;}, 1000);
 	//this Timeout will not delay running the code below VVV
 	
-	if(player.freeroam.canspawnvehicles === false) {
+	if(player.canspawnvehicles === false) {
 		freeroam.chat.send(player, 'You\'ve been barred from spawning vehicles', freeroam.config.colours.red);
 		vehicle.Destroy();
 		return;
@@ -57,8 +57,8 @@ jcmp.events.Add("spawnmenu/local/vehicleSpawned", (player, vehicle) => {
 		return;
     }
 	
-	if(new Date().getTime() <  player.freeroam.vehiclespawnedtime + mintimebetweenspawns){
-		var remtime =  (player.freeroam.vehiclespawnedtime + mintimebetweenspawns - new Date().getTime())/1000;
+	if(new Date().getTime() <  player.vehiclespawnedtime + mintimebetweenspawns){
+		var remtime =  (player.vehiclespawnedtime + mintimebetweenspawns - new Date().getTime())/1000;
 		freeroam.chat.send(player, `Wait ${remtime}s before spawning another vehicle`, freeroam.config.colours.red);
 		vehicle.Destroy();
 		return;
@@ -68,12 +68,12 @@ jcmp.events.Add("spawnmenu/local/vehicleSpawned", (player, vehicle) => {
 		vehicle.SetOccupant(0, player);
 	}
 	
-	player.freeroam.ownedvehicles[player.freeroam.currvehicle] = vehicle;
-	if(player.freeroam.currvehicle < (maxnumvehicles - 1)){
-		player.freeroam.currvehicle = player.freeroam.currvehicle + 1
+	player.ownedvehicles[player.currvehicle] = vehicle;
+	if(player.currvehicle < (maxnumvehicles - 1)){
+		player.currvehicle = player.currvehicle + 1
 	}
 	else{
-		player.freeroam.currvehicle = 0
+		player.currvehicle = 0
 	}	
-	player.freeroam.vehiclespawnedtime = new Date().getTime();
+	player.vehiclespawnedtime = new Date().getTime();
 });
