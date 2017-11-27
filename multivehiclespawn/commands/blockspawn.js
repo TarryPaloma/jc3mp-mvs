@@ -13,7 +13,7 @@ module.exports = ({ Command, manager }) => {
 				freeroam.chat.send(player, 'no / too many matching players!', freeroam.config.colours.red);
 				return;
 			}
-			res[0].freeroam.canspawnvehicles = !res[0].freeroam.canspawnvehicles;
-			freeroam.chat.send(player, `${res[0].escapedNametagName} canspawnvehicles set to ${res[0].freeroam.canspawnvehicles}`);
+			res[0].canspawnvehicles = !res[0].canspawnvehicles;
+			freeroam.chat.send(player, `${res[0].escapedNametagName} canspawnvehicles set to ${res[0].canspawnvehicles}`);
 		}));
 }		
